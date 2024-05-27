@@ -27,8 +27,8 @@
                         <p>{{$film->description}}</p>
                         <div class="single-product-form">
                             <p><strong>Categories: </strong>{{$film->category}}</p>
-                            <p><strong>Cinema: </strong>{{$film->salle->cinema->name}}</p>
-                            <p><strong>Salle: </strong>{{$film->salle->name}}</p>
+                            <p><strong>Cinema: </strong>{{$film?->salle?->cinema->name}}</p>
+                            <p><strong>Salle: </strong>{{$film?->salle?->name}}</p>
                             <p>{{$film->start_at}}</p>
                         </div>
                     </div>

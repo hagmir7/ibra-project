@@ -17,7 +17,12 @@ class VilleResource extends Resource
 {
     protected static ?string $model = Ville::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
+    public static function getModelLabel(): string
+    {
+        return "City (Ville)";
+    }
 
     public static function form(Form $form): Form
     {

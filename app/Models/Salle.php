@@ -9,9 +9,13 @@ class Salle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'number', 'cinema_id'];
+    protected $fillable = ['name', 'number', 'cinema_id', 'first', 'second'];
 
     public function cinema(){
         return $this->belongsTo(Cinema::class);
+    }
+
+    public function films(){
+        return $this->hasMany(Film::class);
     }
 }

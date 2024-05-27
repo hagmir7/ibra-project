@@ -6,6 +6,8 @@ use App\Filament\Resources\CinemaResource\Pages;
 use App\Filament\Resources\CinemaResource\RelationManagers;
 use App\Models\Cinema;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,21 +25,48 @@ class CinemaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->required(),
-                Forms\Components\TextInput::make('address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\Select::make('ville_id')
-                    ->relationship('ville', 'name')
-                    ->required(),
+                Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('ville_id')
+                            ->relationship('ville', 'name')
+                            ->required(),
+                        Forms\Components\TextInput::make('address')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('description')
+                            ->required()
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('image')
+                            ->image()
+                            ->required(),
+                    ])->columns(3),
+                Repeater::make('salles')
+                    ->relationship('salles')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('number')
+                            ->required()
+                            ->numeric(),
+
+                        Forms\Components\TextInput::make('first')
+                            ->label("Frist class places")
+                            ->required()
+                            ->numeric(),
+
+                        Forms\Components\TextInput::make('second')
+                            ->label("Second class places")
+                            ->required()
+                            ->numeric(),
+                    ])
+                    ->addActionLabel("+ New Room")
+                    ->columnSpanFull()
+                    ->minItems(1)
+                    ->columns(2)
             ]);
     }
 
@@ -45,13 +74,21 @@ class CinemaResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')
+                    ->label("Logo"),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
+
                 Tables\Columns\TextColumn::make('address')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('ville.name')
-                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('salles_count')
+                    ->counts('salles')
+                    ->badge()
+                    ->suffix(" Room")
+                    ->label("Rooms (Salles)")
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

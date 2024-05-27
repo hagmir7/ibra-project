@@ -4,9 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FilmResource\Pages;
 use App\Filament\Resources\FilmResource\RelationManagers;
+use App\Models\Cinema;
 use App\Models\Film;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,46 +21,73 @@ class FilmResource extends Resource
 {
     protected static ?string $model = Film::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-film';
+
+    public static function getModelLabel(): string
+    {
+        return "Movie";
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image')
+                Section::make()
+                    ->schema([
 
-                    ->image()
-                    ->required(),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\DateTimePicker::make('start_at')
-                    ->native(false)
-                    ->required(),
-                Forms\Components\TextInput::make('duree')
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\DateTimePicker::make('start_at')
+                            ->native(false)
+                            ->required(),
+                        Forms\Components\TextInput::make('duree')
 
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('category')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('salle_id')
-                    ->label("Salle")
-                    ->relationship('salle', "name")
-                    ->required()
-                    ->native(false)
-                    ->searchable()
-                    ->preload(),
-                Forms\Components\Select::make('villes')
-                    ->relationship('villes', 'name')
-                    ->searchable()
-                    ->multiple()
-                    ->native(false)
-                    ->preload()
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('category')
+                            ->required()
+                            ->maxLength(255),
 
+                        Forms\Components\Select::make('cinema_id')
+                            ->options(Cinema::all()->pluck('name', 'id'))
+                            ->label("Cinem")
+                            ->required()
+                            ->native(false)
+                            ->searchable()
+                            ->preload(),
+                        Forms\Components\Select::make('salle_id')
+                            ->relationship('salle', "name", fn (Builder $query, Get $get) => $query->where('cinema_id', $get('cinema_id')))
+                            ->label("Salle")
+                            ->required()
+                            ->native(false)
+                            ->searchable()
+                            ->preload(),
+                        Forms\Components\Textarea::make('description')
+                            ->required()
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('image')
+                            ->image()
+                            ->required(),
+
+                    ])->columns(3),
+
+                Repeater::make('filmPlaces')
+                    ->relationship("filmPlaces")
+                    ->schema([
+                        Forms\Components\TextInput::make('price')
+                            ->required()
+                            ->numeric()
+                            ->prefix('MAD'),
+                        Forms\Components\Select::make('place_type_id')
+                            ->relationship('placeTypes', "name")
+                            ->required()
+                            ->label("Place Type")
+                            ->native(false)
+
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull()
             ]);
     }
 
@@ -75,7 +106,7 @@ class FilmResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('category')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('salle_id')
+                Tables\Columns\TextColumn::make('salle.number')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

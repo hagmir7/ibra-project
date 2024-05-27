@@ -15,7 +15,4 @@ class Ville extends Model
         return $this->hasMany(Cinema::class);
     }
 
-    public function films(){
-        return $this->belongsToMany(Film::class, 'film_ville');
-    }
 }

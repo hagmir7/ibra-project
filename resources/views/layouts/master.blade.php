@@ -65,8 +65,8 @@
                                 @else
                                 <li>
 									<div class="header-icons">
-                                        <a href="/admin/register" class="boxed-btn" style="padding: 10px 20px;">signup</a>
-                                        <a href="/admin/login" class="bordered-btn"style="padding: 10px 20px;">login</a>
+                                        <a href="/admin/register" class="boxed-btn" style="padding: 10px 20px;">Signup</a>
+                                        <a href="/admin/login" class="bordered-btn"style="padding: 10px 20px;">Login</a>
 									</div>
 								</li>
 

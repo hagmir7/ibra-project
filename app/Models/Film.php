@@ -9,14 +9,14 @@ class Film extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ["image", "title", "description", "start_at", "duree", 'category', 'salle_id'];
 
     public function salle(){
         return $this->belongsTo(Salle::class);
     }
 
-
-    public function villes(){
-        return $this->belongsToMany(Ville::class, 'film_ville');
+    public function filmPlaces(){
+        return $this->hasMany(FilmPlace::class);
     }
+
 }

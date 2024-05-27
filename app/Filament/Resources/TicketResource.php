@@ -17,18 +17,17 @@ class TicketResource extends Resource
 {
     protected static ?string $model = Ticket::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'first_name')
+                    ->required(),
                 Forms\Components\TextInput::make('film_place_id')
-                    ->required()
-                    ->numeric(),
+                    ->required(),
             ]);
     }
 
@@ -36,10 +35,18 @@ class TicketResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('user.first_name')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('filmPlace.price')
+                    ->label("Price")
+                    ->suffix(" MAD")
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('filmPlace.film.title')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('film_place_id')
+
+                Tables\Columns\TextColumn::make('filmPlace.placeTypes.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->integer("number");
+            $table->integer("first");
+            $table->integer("second");
             $table->foreignIdFor(Cinema::class);
             $table->timestamps();
         });

@@ -14,8 +14,8 @@ class PlaceTypeSeeder extends Seeder
     public function run(): void
     {
         DB::table('place_types')->insert([
-            ['name' => 'Standard'],
-            ['name' => 'Premium'],
+            ['name' => 'First Class'],
+            ['name' => 'Second Class'],
         ]);
     }
 }

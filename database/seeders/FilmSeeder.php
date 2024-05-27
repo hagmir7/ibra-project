@@ -20,18 +20,18 @@ class FilmSeeder extends Seeder
                 "title"=>"Casablanca",
                 "description"=>"description 2",
                 "start_at"=> "2024-05-25 01:25:00",
-                "duree"=>2,
+                "duree" => 2,
                 "category"=>"comedy",
-                "salle_id"=>"3"
+                "salle_id"=> 3
             ],
             [
                 "image"=>"products/product-img-3.jpg",
                 "titre"=>"Schindler's List (1993)",
                 "description"=>"description 3",
                 "start_at"=>"2024-05-03 02:00:00",
-                "duree"=>2,
+                "duree" => 2,
                 "category" => "drama",
-                "salle_id"=>"2"
+                "salle_id"=> 2
             ]
             ]);
     }

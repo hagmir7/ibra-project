@@ -19,20 +19,32 @@ class FilmPlaceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Options';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Forms\Components\TextInput::make('place_type_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('film_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Section::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('price')
+                            ->required()
+                            ->numeric()
+                            ->prefix('MAD'),
+                        Forms\Components\Select::make('place_type_id')
+                            ->required()
+                            ->label("Place Type")
+                            ->native(false)
+                            ->relationship('placeTypes', "name"),
+                        Forms\Components\Select::make('film_id')
+                            ->label("Movie")
+                            ->relationship('film', 'title')
+                            ->disableOptionsWhenSelectedInSiblingRepeaterItems()
+                            ->searchable()
+                            ->preload()
+                            ->native(false)
+                            ->required(),
+                        ])->columns(3)
             ]);
     }
 

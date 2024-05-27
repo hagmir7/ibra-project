@@ -15,4 +15,11 @@ class Cinema extends Model
     public function ville() : BelongsTo {
         return $this->belongsTo(Ville::class);
     }
+
+    public function salles(){
+        return $this->hasMany(Salle::class);
+    }
+
+
+
 }
