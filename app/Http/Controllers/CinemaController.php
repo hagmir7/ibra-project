@@ -36,7 +36,8 @@ class CinemaController extends Controller
      */
     public function show(cinema $cinema)
     {
-        //
+        // dd($cinema->films);
+        return view("cinema.show", compact("cinema"));
     }
 
     /**

@@ -32,7 +32,7 @@
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="section-title">
-						<h3><span class="orange-text">Our</span> Movies</h3>
+						<h3><span class="orange-text">Our</span> Cinemas</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
 					</div>
 				</div>
@@ -47,23 +47,25 @@
                 </select>
                 <button type="submit">Search</button>
             </form>
-			<div class="row">
-                @isset($films)
-                @foreach ($films as $film)
+            <div class="row">
+                @isset($cinemas)
+                @foreach ($cinemas as $cinema)
                 <div class="col-lg-3 col-md-6 text-center">
 					<div class="single-product-item">
 						<div class="product-image">
-							<a href="{{ route('film', $film->id) }}"><img src="{{ Storage::url($film->image)}}" alt=""></a>
+							<a href="{{ route('cinema.show', $cinema->id) }}"><img src="{{ Storage::url($cinema->image)}}" height="200px" alt=""></a>
 						</div>
-						<h3>{{$film->title}}</h3>
-						<a href="{{ route('film', $film->id) }}" class="cart-btn"> Book a ticket</a>
+                        <a href="{{ route('cinema.show', $cinema->id) }}">
+						     <h3>{{$cinema->name}}</h3>
+                        </a>
+
 					</div>
 				</div>
                 @endforeach
                 @endisset
 
 			</div>
-            {{ $films->links() }}
+            {{ $cinemas->links() }}
 		</div>
 	</div>
 

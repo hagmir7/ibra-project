@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cinema;
 use App\Models\Film;
 use App\Models\Ville;
 use Illuminate\Http\Request;
@@ -16,20 +17,20 @@ class FilmController extends Controller
 
         if (isset($request->query->all()['query'])) {
             $query = $request->query->all()['query'];
-            $films = Film::where('title', 'like', "%$query%")
-                ->orwhere('category', 'like', "%$query%")
+            $cinemas = Cinema::where('name', 'like', "%$query%")
                 ->paginate(12);
         }elseif(isset($request->query->all()['ville'])){
 
             $ville = $request->query->all()['ville'];
-            $films = Ville::where('name', $ville)->first()->films()->paginate(12);
+            $cinemas = Ville::where('name', $ville)->first()->cinemas()->paginate(12);
 
         }else {
-            $films = Film::paginate(12);
+            $cinemas = Cinema::paginate(12);
         }
 
         $villes = Ville::all();
-        return view("welcome", compact('films', "villes"));
+
+        return view("welcome", compact("villes" ,"cinemas"));
     }
 
     /**

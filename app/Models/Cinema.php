@@ -20,6 +20,11 @@ class Cinema extends Model
         return $this->hasMany(Salle::class);
     }
 
+    public function films()
+    {
+        return $this->hasManyThrough(Film::class, Salle::class);
+    }
+
 
 
 }

@@ -33,16 +33,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-7">
-                    <form action="">
-                       <select name="" class="form-select" id="">
-                        @foreach ($film->villes as $ville)
-                            <option value="{{ $ville->id }}">{{ $ville->name }}</option>
-                        @endforeach
-                       </select>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
