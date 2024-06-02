@@ -188,7 +188,7 @@
                                     {{ $ticket->filmPlace->film->salle->name }}
                                 </p>
                             </div>
-                            <a href="{{ route(" ticket.show", $ticket->id) }}">Print</a>
+                            <a href="{{ route("ticket.show", $ticket->id) }}">Print</a>
                         </section>
                     </div>
                 </div>
