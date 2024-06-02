@@ -9,10 +9,10 @@ class FilmPlace extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['price', 'place_type_id', 'film_id'];
+    protected $fillable = ['price', 'place_type_id', 'film_id', 'number'];
 
 
-    public function placeTypes(){
+    public function placeType(){
         return $this->belongsTo(PlaceType::class);
     }
 

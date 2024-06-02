@@ -37,27 +37,35 @@
 					</div>
 				</div>
 			</div>
-            <form  method="get">
+           <div class="row">
+            <form method="get" class="mb-4 col-md-6">
 
-                <select name="ville" class="form-select" id="">
-                    @foreach ($villes as $ville)
+                <div class="input-group ">
+                    <select name="ville" class="form-select" id="">
+                        @foreach ($villes as $ville)
                         <option value="{{ $ville->name }}">{{$ville->name}}</option>
-                    @endforeach
+                        @endforeach
 
-                </select>
-                <button type="submit">Search</button>
+                    </select>
+                    <button type="submit" class="btn btn-danger">Search</button>
+                </div>
             </form>
+           </div>
             <div class="row">
                 @isset($cinemas)
                 @foreach ($cinemas as $cinema)
-                <div class="col-lg-3 col-md-6 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
+                <div class="col-md-4 text-center">
+					<div class="card shadow-sm">
+						<div class="product-image p-0 pt-2">
 							<a href="{{ route('cinema.show', $cinema->id) }}"><img src="{{ Storage::url($cinema->image)}}" height="200px" alt=""></a>
 						</div>
-                        <a href="{{ route('cinema.show', $cinema->id) }}">
-						     <h3>{{$cinema->name}}</h3>
-                        </a>
+                        <div class="mb-3 px-3">
+                            <a class="text-start" href="{{ route('cinema.show', $cinema->id) }}">
+                               <div>
+                                <h3 class="h5">{{$cinema->name}}</h3> ({{ $cinema->ville->name }})
+                               </div>
+                            </a>
+                        </div>
 
 					</div>
 				</div>

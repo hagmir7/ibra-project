@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->integer("number_place");
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(FilmPlace::class);
             $table->timestamps();

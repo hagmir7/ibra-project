@@ -52,15 +52,18 @@ class FilmPlaceResource extends Resource
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('film.title')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('placeType.name')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money("MAD")
+                    ->badge()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('place_type_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('film_id')
-                    ->numeric()
-                    ->sortable(),
+
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

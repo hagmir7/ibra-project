@@ -16,7 +16,7 @@ class FilmSeeder extends Seeder
         DB::table("films")->insert([
             [
                 "image"=>"litra.png",
-                "titre"=>"Litra f Marrakech",
+                "title"=>"Litra f Marrakech",
                 "description"=>"description 5",
                 "start_at"=>"2024-06-03 02:00:00",
                 "duree" => 2,
@@ -25,7 +25,7 @@ class FilmSeeder extends Seeder
             ],
             [
                 "image"=>"avatar.jpg",
-                "titre"=>"Avatar",
+                "title"=>"Avatar",
                 "description"=>"description 3",
                 "start_at"=>"2024-05-03 02:00:00",
                 "duree" => 2,

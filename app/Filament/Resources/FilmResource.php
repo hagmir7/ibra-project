@@ -6,6 +6,8 @@ use App\Filament\Resources\FilmResource\Pages;
 use App\Filament\Resources\FilmResource\RelationManagers;
 use App\Models\Cinema;
 use App\Models\Film;
+use App\Models\Place;
+use App\Models\PlaceType;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
@@ -42,7 +44,6 @@ class FilmResource extends Resource
                             ->native(false)
                             ->required(),
                         Forms\Components\TextInput::make('duree')
-
                             ->required()
                             ->numeric(),
                         Forms\Components\TextInput::make('category')
@@ -52,10 +53,8 @@ class FilmResource extends Resource
                         Forms\Components\Select::make('cinema_id')
                             ->options(Cinema::all()->pluck('name', 'id'))
                             ->label("Cinem")
-                            ->required()
                             ->native(false)
-                            ->searchable()
-                            ->preload(),
+                            ->searchable(),
                         Forms\Components\Select::make('salle_id')
                             ->relationship('salle', "name", fn (Builder $query, Get $get) => $query->where('cinema_id', $get('cinema_id')))
                             ->label("Salle")
@@ -68,6 +67,7 @@ class FilmResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\FileUpload::make('image')
                             ->image()
+                            ->directory('filmes')
                             ->required(),
 
                     ])->columns(3),
@@ -80,7 +80,7 @@ class FilmResource extends Resource
                             ->numeric()
                             ->prefix('MAD'),
                         Forms\Components\Select::make('place_type_id')
-                            ->relationship('placeTypes', "name")
+                            ->options(PlaceType::all()->pluck('name', 'id'))
                             ->required()
                             ->label("Place Type")
                             ->native(false)
@@ -102,11 +102,14 @@ class FilmResource extends Resource
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('duree')
+                    ->suffix(" Hour")
+                    ->badge()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('category')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('salle.number')
+                    ->badge()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

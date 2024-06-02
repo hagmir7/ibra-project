@@ -4,10 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
-                <div class="breadcrumb-text">
-                    <p>See more Details</p>
-                    <h1>Single Cinemas</h1>
-                </div>
+                <h1 class="h2 text-white">{{$cinema->name}}</h1>
             </div>
         </div>
     </div>
@@ -18,31 +15,65 @@ $films = $cinema->films ;
 @endphp
 {{-- start content --}}
 	<!-- product section -->
-	<div class="product-section mt-150 mb-150">
+	<div class="product-section py-5">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="section-title">
-						<h3><span class="orange-text">Cinema :{{$cinema->name}}</span> </h3>
-					</div>
-				</div>
-			</div>
-
             <div class="row">
-                @foreach ($films as $obj)
-                <div class="col-lg-3 col-md-6 text-center">
-                    <a href="{{ route('film', $obj->id) }}">
-                        <div class="single-product-item">
-                            <div class="product-image">
-                                    <img src="{{ Storage::url($obj->image)}}" alt="">
-                            </div>
-                            <h3>{{$obj->title}}</h3>
-                            <a href="{{ route('film', $obj->id) }}" class="cart-btn"> Book a ticket</a>
+                <div class="col-md-5">
+                    <div class="single-product-img">
+                        <img src="{{ Storage::url($cinema->image)}}"  alt="">
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="single-product-content">
+                        <h3>{{$cinema->name}} <small>({{ $cinema->ville->name }})</small></h3>
+                        <p>{{$cinema->description}}</p>
+                    <ul class="list-group mb-2">
+                        <li class="list-group-item bg-card d-flex justify-content-between align-items-center row m-0 px-2">
+                            <div class="col-6">Name</div>
+                            <div class="col-6 fw-bold">{{$cinema?->name}}</div>
+                        </li>
+
+                        <li class="list-group-item bg-card d-flex justify-content-between align-items-center row m-0 px-2">
+                            <div class="col-6">Rooms</div>
+                            <div class="col-6 fw-bold">{{$cinema?->salles->count()}}</div>
+                        </li>
+
+                        <li class="list-group-item bg-card d-flex justify-content-between align-items-center row m-0 px-2">
+                            <div class="col-6">Movies</div>
+                            <div class="col-6 fw-bold">{{$cinema->films->count()}}</div>
+                        </li>
+                        <li class="list-group-item bg-card d-flex justify-content-between align-items-center row m-0 px-2">
+                            <div class="col-6">City</div>
+                            <div class="col-6 fw-bold">{{$cinema?->ville->name}}</div>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="my-3">Latest movies and series</h4>
+            <div class="row">
+                @foreach ($films as $film)
+                <div class="m-0 mb-3 col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 p-1">
+                    <div class="movie-card m-0">
+                        <div class="p-0 overflow-hidden border position-relative">
+                            <a href="{{ route('film', $film->id) }}">
+                                <img width="100%" src="{{ Storage::url($film->image)}}" class="cover movie-image lazy loaded" />
+                            </a>
+                            <div class="movie-card-shadow"> </div>
                         </div>
-                    </a>
-				</div>
+                        <div class="rounded p-0 overflow-hidden pt-2">
+                            <a href="{{ route('film', $film->id) }}">
+                                <h2 class="card-title mb-0 h6" dir="auto">{{$film->title}}</h2>
+                            </a>
+                            <div class="mt-2">
+                                <a href="{{ route('film', $film->id) }}" class="btn btn-danger p-2 w-100 rounded-pill">Book a ticket</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
-			</div>
+            </div>
 		</div>
 	</div>
 @endisset

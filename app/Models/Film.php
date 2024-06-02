@@ -9,7 +9,7 @@ class Film extends Model
 {
     use HasFactory;
 
-    protected $guarded = ["image", "title", "description", "start_at", "duree", 'category', 'salle_id'];
+    protected $fillable = ["image", "title", "description", "start_at", "duree", 'category', 'salle_id'];
 
     public function salle(){
         return $this->belongsTo(Salle::class);
@@ -18,5 +18,15 @@ class Film extends Model
     public function filmPlaces(){
         return $this->hasMany(FilmPlace::class);
     }
+
+    protected $casts = [
+        'start_at' => 'datetime',
+    ];
+
+    protected $dates = [
+        'start_at',
+    ];
+
+
 
 }

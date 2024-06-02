@@ -35,18 +35,21 @@ class TicketResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.first_name')
+                Tables\Columns\TextColumn::make('user')
+                    ->formatStateUsing(fn ($state) =>$state->getFilamentName())
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('filmPlace.price')
                     ->label("Price")
+                    ->badge()
                     ->suffix(" MAD")
                     ->sortable(),
                 Tables\Columns\TextColumn::make('filmPlace.film.title')
                     ->numeric()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('filmPlace.placeTypes.name')
+                Tables\Columns\TextColumn::make('filmPlace.placeType.name')
+                    ->badge()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
